@@ -1,0 +1,10 @@
+version: 1.0
+shards:
+  sdl:
+    github: ysbaddaden/sdl.cr
+    commit: 17d714dff6fe78deba173d4eb131722db915163c
+
+  termbox:
+    github: andrewsuzuki/termbox-crystal
+    commit: 9471d1f1852dec251d6bcb6f8a583e7abdf04f68
+

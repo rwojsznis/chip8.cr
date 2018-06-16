@@ -1,0 +1,6 @@
+name: chip8
+version: 0.0.1
+
+dependencies:
+  sdl:
+    github: ysbaddaden/sdl.cr
