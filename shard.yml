@@ -1,4 +1,4 @@
-name: chip8
+name: chip8.cr
 version: 0.0.1
 
 dependencies:
