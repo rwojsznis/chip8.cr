@@ -1,4 +1,5 @@
 require "sdl"
+require "sdl/mix"
 
 module Chip8
   class SDLAdapter
@@ -22,9 +23,12 @@ module Chip8
       LibSDL::Keycode::F,
       LibSDL::Keycode::V,
     ]
+    DATA_DIR = File.join(__DIR__, "../data")
 
     def initialize(console : Chip8::Console)
-      SDL.init(SDL::Init::VIDEO)
+      SDL.init(SDL::Init::VIDEO | SDL::Init::AUDIO)
+      LibMix.init(SDL::Mix::Init::FLAC)
+      SDL::Mix.open
 
       @console = console
       @window = SDL::Window.new("Chip-8", WIDTH, HEIGHT)
@@ -47,7 +51,12 @@ module Chip8
 
       @texture = SDL::Texture.new texture
 
-      at_exit { SDL.quit }
+      @beep = SDL::Mix::Sample.new(File.join(DATA_DIR, "sample.wav"))
+
+      at_exit do
+        SDL::Mix.quit
+        SDL.quit
+      end
     end
 
     def draw
@@ -70,6 +79,10 @@ module Chip8
       @console.drawn
 
       sleep ENV["DELAY"]? ? ENV["DELAY"].to_f : 0.015
+    end
+
+    def make_sound
+      SDL::Mix::Channel.play(@beep)
     end
 
     def handle_keyboard : Bool

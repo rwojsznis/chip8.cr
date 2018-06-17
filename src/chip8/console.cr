@@ -71,13 +71,15 @@ module Chip8
       opcode = @mem[@pc].to_u16 << 8 | @mem[@pc + 1]
 
       instruction(opcode)
+    end
 
+    def beep?
+      @sound_timer == 1
+    end
+
+    def timers
       @delay_timer -= 1_u8 if @delay_timer > 0_u8
-
-      if @sound_timer > 0_u8
-        # make_a_beep if sound_timer == 1
-        @sound_timer -= 1_u8
-      end
+      @sound_timer -= 1_u8 if @sound_timer > 0_u8
     end
 
     def keypress(index, flag)

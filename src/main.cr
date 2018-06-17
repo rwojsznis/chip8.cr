@@ -12,6 +12,9 @@ console.load(ARGV[0])
 
 loop do
   console.cycle
+  display_adapter.make_sound if console.beep?
+  console.timers
+
   break unless display_adapter.handle_keyboard
 
   display_adapter.draw if console.draw?
